@@ -34,27 +34,30 @@ public class Controller {
 
     @FXML
     public void playButtonPressed() {
+        if( timerThread==null || !timerThread.isAlive() ) {
+            timerThread = new Thread(() -> {
+                long currentTime = System.currentTimeMillis()/1000;
 
-        timerThread = new Thread(() -> {
-            long currentTime = System.currentTimeMillis()/1000;
+                while( !Thread.currentThread().isInterrupted() ) {
+                    try {
+                        if( currentTime < (System.currentTimeMillis()/1000) ) {
+                            time.incrementSecond();
+                            timeText.setText(time.toString());
 
-            while( !Thread.currentThread().isInterrupted() ) {
-                try {
-                    if( currentTime < (System.currentTimeMillis()/1000) ) {
-                        time.incrementSecond();
-                        timeText.setText(time.toString());
+                            currentTime = System.currentTimeMillis()/1000;
+                        }
 
-                        currentTime = System.currentTimeMillis()/1000;
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
                     }
-
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
                 }
-            }
-        });
+            });
 
-        timerThread.start();
+            timerThread.start();
+        }
+
+
     }
 
     @FXML

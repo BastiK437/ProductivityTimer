@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Productivity">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/out/artifacts/Productivity_jar/Productivity.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
