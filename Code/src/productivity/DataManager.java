@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class DataManager {
 
     public void storeTime(String time) {
-        File dataDir = new File("productivity/data/");
+        File dataDir = new File("data/");
 
         if( !dataDir.exists() ) {
             if( !dataDir.mkdir() ) {
@@ -44,7 +44,7 @@ public class DataManager {
     }
 
     public String restoreTime() {
-        File safeFile = new File("productivity/data/time.txt");
+        File safeFile = new File("data/time.txt");
         String restoredTime = "00:00:00";
 
         if( !safeFile.exists() ) {
