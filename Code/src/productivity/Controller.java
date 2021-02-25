@@ -2,15 +2,16 @@ package productivity;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
 public class Controller {
 
     private Thread timerThread;
-    private StopwatchTime time;
+    private StopwatchTime workTime;
+    private StopwatchTime pauseTime;
+    private StopwatchTime startTime;
     private DataManager dataManager;
+    private boolean pauseTimer;
 
     @FXML
     Button pauseButton;
@@ -22,57 +23,64 @@ public class Controller {
     Text timeText;
 
     @FXML
+    Text captureText;
+
+    @FXML
     public void initialize() {
         dataManager = new DataManager();
 
         String restoredTime = dataManager.restoreTime();
-        time = new StopwatchTime(restoredTime);
+        workTime = new StopwatchTime(restoredTime);
+        startTime = new StopwatchTime(restoredTime);
 
-        timeText.setText(time.toString());
+        timeText.setText(workTime.toString());
+
+        pauseTimer = false;
     }
 
 
     @FXML
     public void playButtonPressed() {
-        if( timerThread==null || !timerThread.isAlive() ) {
-            timerThread = new Thread(() -> {
-                long currentTime = System.currentTimeMillis()/1000;
-
-                while( !Thread.currentThread().isInterrupted() ) {
-                    try {
-                        if( currentTime < (System.currentTimeMillis()/1000) ) {
-                            time.incrementSecond();
-                            timeText.setText(time.toString());
-
-                            currentTime = System.currentTimeMillis()/1000;
-                        }
-
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                    }
-                }
-            });
-
-            timerThread.start();
+        if(pauseTimer) {
+            stopTimerThread();
+            pauseTimer = false;
         }
 
-
+        captureText.setText("Productivity Timer");
+        if( timerThread==null || !timerThread.isAlive() ) {
+            timerThread = new Thread(new Timer(workTime, timeText));
+            timerThread.start();
+        }
     }
 
     @FXML
     public void pauseButtonPressed() {
-        stopTimerThread();
+        if(!pauseTimer) {
+            stopTimerThread();
+            pauseTimer = true;
+        }
+
+        captureText.setText("Pause Timer");
+        if( timerThread==null || !timerThread.isAlive() ) {
+            timerThread = new Thread(new Timer(new StopwatchTime(), timeText));
+            timerThread.start();
+        }
     }
 
     public void exitApplication() {
-        dataManager.storeTime(time.toString());
         stopTimerThread();
+        dataManager.storeTime(workTime.toString());
+        dataManager.storeDiff(workTime.diff(startTime));
     }
 
     private void stopTimerThread() {
         if( timerThread != null && timerThread.isAlive() ) {
             timerThread.interrupt();
+            try {
+                timerThread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

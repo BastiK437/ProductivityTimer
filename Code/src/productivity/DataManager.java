@@ -22,8 +22,6 @@ public class DataManager {
         if( !safeFile.exists() ) {
             try {
                 safeFile.createNewFile();
-
-
             } catch (IOException e) {
                 System.err.printf("cant create File!\n");
                 fileOpened = false;
@@ -47,9 +45,7 @@ public class DataManager {
         File safeFile = new File("data/time.txt");
         String restoredTime = "00:00:00";
 
-        if( !safeFile.exists() ) {
-            restoredTime = "00:00:00";
-        } else {
+        if( safeFile.exists() ) {
             Scanner myReader = null;
             try {
                 myReader = new Scanner(safeFile);
@@ -65,5 +61,55 @@ public class DataManager {
             }
         }
         return restoredTime;
+    }
+
+    public void storeDiff(StopwatchTime diffTime) {
+        File dataDir = new File("data/");
+
+        if( !dataDir.exists() ) {
+            if( !dataDir.mkdir() ) {
+                System.err.printf("dir not created\n");
+            }
+        }
+
+        File safeFile = new File(dataDir.getPath() + "/allTime.txt");
+        boolean fileOpened = true;
+
+        if( !safeFile.exists() ) {
+            try {
+                safeFile.createNewFile();
+            } catch (IOException e) {
+                System.err.printf("cant create File!\n");
+                fileOpened = false;
+            }
+        }
+
+        if(fileOpened) {
+            try {
+                Scanner myReader = null;
+                String restoredTime = "00:00:00";
+                try {
+                    myReader = new Scanner(safeFile);
+                    if(myReader.hasNext()) {
+                        restoredTime = myReader.nextLine();
+                    }
+
+                    myReader.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+                BufferedWriter writer = new BufferedWriter(new FileWriter(safeFile));
+                StopwatchTime tmpTime = new StopwatchTime(restoredTime);
+
+                tmpTime = tmpTime.add(diffTime);
+
+                writer.write(tmpTime.toString());
+
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

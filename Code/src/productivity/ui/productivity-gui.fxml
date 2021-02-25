@@ -5,11 +5,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox prefHeight="200.0" prefWidth="236.0" xmlns="http://javafx.com/javafx/11.0.3-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="productivity.Controller">
+<VBox prefHeight="200.0" prefWidth="236.0" xmlns="http://javafx.com/javafx/11.0.10-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="productivity.Controller">
     <children>
         <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="200.0" prefWidth="238.0" VBox.vgrow="ALWAYS">
             <children>
-                <Text layoutX="26.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Productivity Timer">
+                <Text fx:id="captureText" layoutX="24.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Productivity Timer" textAlignment="CENTER" wrappingWidth="187.857421875">
                     <font>
                         <Font size="20.0" />
                     </font>

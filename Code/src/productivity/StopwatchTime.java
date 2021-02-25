@@ -17,6 +17,24 @@ public class StopwatchTime {
         hours = Integer.parseInt(time.substring(0,2));
     }
 
+    public int getSeconds() {
+        return seconds;
+    }
+
+    public int getMinutes() {
+        return minutes;
+    }
+
+    public int getHours() {
+        return hours;
+    }
+
+    public StopwatchTime(int hours, int minutes, int seconds) {
+        this.hours = hours;
+        this.minutes = minutes;
+        this.seconds = seconds;
+    }
+
     public void incrementSecond() {
         seconds++;
         if(seconds >= 60) {
@@ -28,6 +46,50 @@ public class StopwatchTime {
             }
         }
 
+    }
+
+    public StopwatchTime diff(StopwatchTime startTime) {
+        int seconds = 0;
+        int minutes = 0;
+        int hours = 0;
+
+        seconds = this.seconds - startTime.seconds;
+        if(seconds < 0) {
+            seconds += 60;
+            minutes = -1;
+        }
+
+        minutes += this.minutes - startTime.minutes;
+        if(minutes < 0) {
+            minutes += 60;
+            hours = -1;
+        }
+
+        hours += this.hours - startTime.hours;
+
+        return new StopwatchTime(hours, minutes, seconds);
+    }
+
+    public StopwatchTime add(StopwatchTime time) {
+        int seconds = 0;
+        int minutes = 0;
+        int hours = 0;
+
+        seconds = this.seconds + time.seconds;
+        if(seconds > 60) {
+            seconds -= 60;
+            minutes = 1;
+        }
+
+        minutes += this.minutes + time.minutes;
+        if(minutes > 60) {
+            minutes -= 60;
+            hours = 1;
+        }
+
+        hours += this.hours + time.hours;
+
+        return new StopwatchTime(hours, minutes, seconds);
     }
 
     public String toString() {
