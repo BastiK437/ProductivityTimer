@@ -32,6 +32,8 @@ Exec=$INSTALL_DIR/ProductivityTimer/start.sh
 Icon=$INSTALL_DIR/ProductivityTimer/icon.png
 Terminal=false
 Type=Application
+Path=$INSTALL_DIR
+StartupNotify=false
 EOM
 
 mv productivity.desktop $HOME/.local/share/applications/

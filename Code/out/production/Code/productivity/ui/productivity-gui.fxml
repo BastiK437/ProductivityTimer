@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="200.0" prefWidth="236.0" xmlns="http://javafx.com/javafx/11.0.10-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="productivity.Controller">
+    <children>
+        <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="200.0" prefWidth="238.0" VBox.vgrow="ALWAYS">
+            <children>
+                <Text fx:id="captureText" layoutX="24.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Productivity Timer" textAlignment="CENTER" wrappingWidth="187.857421875">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                </Text>
+                <Text fx:id="timeText" layoutX="50.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00:00:00" wrappingWidth="136.7294921875">
+                    <font>
+                        <Font size="30.0" />
+                    </font>
+                </Text>
+                <Button fx:id="playButton" layoutX="50.0" layoutY="133.0" mnemonicParsing="false" onAction="#playButtonPressed" prefHeight="45.0" prefWidth="45.0">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../data/icons/icons8-play-100.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+                <Button fx:id="pauseButton" layoutX="142.0" layoutY="133.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#pauseButtonPressed" prefHeight="45.0" prefWidth="45.0">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../data/icons/icons8-pause-100.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            </children>
+        </AnchorPane>
+    </children>
+</VBox>
